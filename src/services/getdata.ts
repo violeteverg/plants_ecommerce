@@ -1,5 +1,10 @@
 import axios from "axios";
-import { CartItem, product, response } from "@/utils/schemas/productSchemas";
+import {
+  CartItem,
+  productResponse,
+  response,
+  responses,
+} from "@/utils/schemas/productSchemas";
 
 export const getAllProduct = async (): Promise<response> => {
   try {
@@ -51,7 +56,37 @@ export const getSucculentsProduct = async (): Promise<response> => {
     throw new Error("Failed to fetch products");
   }
 };
-export const getProductId = async (id: number) => {
+export const getPotsProduct = async (): Promise<responses> => {
+  try {
+    const res = await fetch("http://localhost:3007/product/category/pots", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getGrowingMediaProduct = async (): Promise<responses> => {
+  try {
+    const res = await fetch(
+      "http://localhost:3007/product/category/growing-media",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getProductId = async (id: number): Promise<productResponse> => {
   try {
     const res = await axios.get(`http://localhost:3007/product/${id}`);
     const data = res.data.data;

@@ -4,8 +4,8 @@ import { verifyAuth } from "./utils/auth";
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("Authentication")?.value;
-  console.log("Token :", token);
-  const protectedPaths = ["/cart", "/payment"];
+
+  const protectedPaths = ["/cart", "/cart/payment"];
 
   //verified token must same at the backend
   const verifiedToken = token && (await verifyAuth(token));
@@ -26,5 +26,5 @@ export async function middleware(req: NextRequest) {
   }
 }
 export const config = {
-  matcher: ["/Register", "/Login", "/cart", "/payment"],
+  matcher: ["/Register", "/Login", "/cart", "/cart/(.*)"],
 };

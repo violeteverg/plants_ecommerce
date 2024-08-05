@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/utils";
+import { checkQuantity, formatPrice } from "@/lib/utils";
 import { TPutCart } from "@/utils/schemas/cartSchemas";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
@@ -12,6 +12,7 @@ interface CartProductProps {
   quantity: number;
   price: number;
   title: string;
+  productQuantity: number;
   updateCart: (updateCart: TPutCart) => void;
   removeCart: () => void;
 }
@@ -21,6 +22,7 @@ export default function CartProducts({
   quantity,
   price,
   title,
+  productQuantity,
   updateCart,
   removeCart,
 }: CartProductProps) {
@@ -38,7 +40,7 @@ export default function CartProducts({
   };
 
   return (
-    <div className='w-[90%] h-fit my-4'>
+    <div className='w-full h-fit my-4'>
       <div className='w-full flex rounded-xl border border-black p-2'>
         <Image src={image} alt='product' width={90} height={90} />
         <div className='flex justify-between w-full items-center p-2'>
@@ -53,6 +55,7 @@ export default function CartProducts({
                 size='xs'
                 className='flex items-center justify-center h-full text-black'
                 onClick={() => handleUpdateQuantity(newQuantity - 1)}
+                disabled={newQuantity <= 1}
               >
                 <Minus className='h-[80%] w-[80%]' />
               </Button>
@@ -69,6 +72,7 @@ export default function CartProducts({
                 size='xs'
                 className='flex items-center justify-center h-full text-black'
                 onClick={() => handleUpdateQuantity(newQuantity + 1)}
+                disabled={!!checkQuantity(productQuantity, newQuantity + 1)}
               >
                 <Plus className='h-[80%] w-[80%]' />
               </Button>

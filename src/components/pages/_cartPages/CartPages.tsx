@@ -25,6 +25,7 @@ export default function CartPages() {
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
+  console.log(cartItems);
 
   //summary total quantity and total price
   const totalSummary: TotalSummary = useMemo(() => {
@@ -56,9 +57,9 @@ export default function CartPages() {
       <Navbar navbarStyle='sticky' />
       <WidthWrapper className='flex justify-center items-center h-screen '>
         <div className='flex w-[80%] border rounded-lg border-black'>
-          <div className='w-[70%] flex flex-col justify-center h-full items-center'>
-            <h1>My Cart</h1>
-            <div className='w-full flex flex-col p-4 h-[70vh] items-center overflow-y-auto my-2'>
+          <div className='w-[70%] flex flex-col justify-center h-full items-start'>
+            <h1 className='p-2 text-lg'>My Cart</h1>
+            <div className='w-full flex flex-col px-2 h-[70vh] items-center overflow-y-auto my-2'>
               {isLoading
                 ? Array.from({ length: 3 }).map((_, i) => (
                     <LoadingCartPages key={i} />
@@ -70,6 +71,7 @@ export default function CartPages() {
                       quantity={items.quantity}
                       image={items.product.image}
                       price={items.product.price}
+                      productQuantity={items.product.quantity}
                       updateCart={(update: TPutCart) =>
                         updateCart({ cartId: items.id, updateCart: update })
                       }

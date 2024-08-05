@@ -35,7 +35,7 @@ const CardProducts = ({
   const cardClickHandler = (id: number) => {
     console.log("ID:", id);
     setProductId(id);
-    router.push("/detail");
+    router.push(`/detail?productId=${id}`);
   };
 
   // console.log(productId);
