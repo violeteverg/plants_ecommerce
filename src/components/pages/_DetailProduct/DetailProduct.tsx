@@ -3,19 +3,24 @@
 import WidthWrapper from "@/components/WidthWrapper";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, setSessionStorage } from "@/lib/utils";
 import { getProductId } from "@/services/getdata";
 import { addCart } from "@/services/postdata";
 import { useMainStore } from "@/utils/providers/storeProvider";
 import { TPostCart } from "@/utils/schemas/cartSchemas";
+import { productResponse } from "@/utils/schemas/productSchemas";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Minus } from "lucide-react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
 export default function DetailProduct() {
   const queryClient = useQueryClient();
-  const { count, increment, decrement, productId, resetCount, setIsOpen } =
+  const router = useRouter();
+  const productId = Number(useSearchParams().get("productId"));
+
+  const { count, increment, decrement, resetCount, setIsOpen, setProductId } =
     useMainStore((state) => ({
       count: state.count,
       increment: state.increment,
@@ -23,24 +28,23 @@ export default function DetailProduct() {
       productId: state.productId,
       resetCount: state.resetCount,
       setIsOpen: state.setIsOpen,
+      setProductId: state.setProductId,
     }));
 
   const {
     data: dataProduct,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ["PRODUCTID", productId],
+  } = useQuery<productResponse | null>({
+    queryKey: ["PRODUCTID"],
     queryFn: () => getProductId(productId),
   });
 
   const { mutate } = useMutation({
     mutationFn: (val: TPostCart) => {
-      console.log(val);
       return addCart(val);
     },
     onSuccess: (data) => {
-      console.log(data);
       queryClient.invalidateQueries({ queryKey: ["CARTITEMS"] });
     },
     onError: (error) => {
@@ -50,15 +54,16 @@ export default function DetailProduct() {
 
   const productDetails = useMemo(() => {
     if (!dataProduct) return null;
+    const item = dataProduct[0];
     return {
-      title: dataProduct?.title,
-      latinName: dataProduct.latinName,
-      description: dataProduct.description,
-      image: dataProduct.image,
-      price: dataProduct.price,
-      quantity: dataProduct.quantity,
-      category: dataProduct.category,
-      discount: dataProduct.discount,
+      title: item?.title,
+      latinName: item.latinName,
+      description: item.description,
+      image: item.image,
+      price: item.price,
+      quantity: item.quantity,
+      category: item.category,
+      discount: item.discount,
     };
   }, [dataProduct]);
 
@@ -70,9 +75,15 @@ export default function DetailProduct() {
 
   const addToCart = () => {
     if (productDetails) {
-      mutate({ productId: dataProduct?.id, quantity: count });
+      mutate({ productId: dataProduct?.[0]?.id ?? 0, quantity: count });
     }
     setIsOpen(true);
+  };
+
+  const buyNow = () => {
+    setProductId(productId);
+    setSessionStorage("__Ttemp", { index: productId, isBuyNow: true }, 5);
+    router.push("/cart/payment");
   };
 
   useEffect(() => {
@@ -159,7 +170,10 @@ export default function DetailProduct() {
                 <Button className='font-mono w-[24%]' onClick={addToCart}>
                   <p className='font-[800]'>+cart</p>
                 </Button>
-                <Button className='w-full font-mono text-white font-[800]'>
+                <Button
+                  className='w-full font-mono text-white font-[800]'
+                  onClick={buyNow}
+                >
                   Buy Now
                 </Button>
               </div>

@@ -11,9 +11,11 @@ export type StoreState = {
     picture: string;
     quantity: string;
   }[];
+  tempProduct: Number | null;
   activePage: string;
   isAuthenticated: boolean;
   isOpen: boolean;
+  isBuyNow: boolean;
 };
 
 // Actions
@@ -33,6 +35,8 @@ export type StoreActions = {
   setProductId: (id: number) => void;
   resetCount: () => void;
   setIsOpen: (isOpen: boolean) => void;
+  setIsBuyNow: (isBuyNow: boolean) => void;
+  setIsTempProduct: (tempProduct: Number | null) => void;
 };
 
 export type MainStore = StoreState & StoreActions;
@@ -41,9 +45,11 @@ export const defaultInitState: StoreState = {
   count: 1,
   productId: 0,
   cart: [],
+  tempProduct: null,
   activePage: "/",
   isAuthenticated: false,
   isOpen: false,
+  isBuyNow: true,
 };
 
 export const createMainStore = (initState: StoreState = defaultInitState) => {
@@ -59,5 +65,7 @@ export const createMainStore = (initState: StoreState = defaultInitState) => {
     setProductId: (id) => set({ productId: id }),
     resetCount: () => set({ count: 1 }),
     setIsOpen: (isOpen) => set({ isOpen }),
+    setIsBuyNow: (isBuyNow) => set({ isBuyNow }),
+    setIsTempProduct: (tempProduct) => set({ tempProduct }),
   }));
 };

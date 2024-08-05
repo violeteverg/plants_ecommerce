@@ -15,6 +15,13 @@ export type product = {
   category: category;
   discount: number | null;
 };
+export type responses = {
+  code: number;
+  status: string;
+  message: string;
+  data: Array<Product>;
+};
+export type productResponse = Array<product>;
 export type response = {
   data: Array<product>;
 };

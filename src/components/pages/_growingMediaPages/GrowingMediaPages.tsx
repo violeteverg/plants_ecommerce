@@ -1,11 +1,21 @@
 "use client";
 
 import CardProducts from "@/components/organisms/CardProducts/CardProducts";
+import Loading from "@/components/organisms/Loading/Loading";
 import Layout from "@/components/templates/Layout";
 import { DummyCactusProducts } from "@/lib/mock/DummyProduct";
+import { getGrowingMediaProduct } from "@/services/getdata";
+import { responses } from "@/utils/schemas/productSchemas";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 
 export default function GrowingMediaPages() {
+  const { data, isLoading } = useQuery<responses>({
+    queryKey: ["GROWING_MEDIA"],
+    queryFn: getGrowingMediaProduct,
+  });
+  const product = data?.data || [];
+  const numPlaceholders = data?.data.length || 5;
   return (
     <Layout>
       <div className='flex-1 overflow-y-auto'>
@@ -33,19 +43,19 @@ export default function GrowingMediaPages() {
           </div>
           <div className='rounded-[5px] mb-2 border overflow-hidden'>
             <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 m-2'>
-              {DummyCactusProducts.map((item) => {
-                return (
-                  <CardProducts
-                    key={item.id}
-                    id={item.id}
-                    title={item.title}
-                    price={item.price}
-                    image={item.image}
-                    discount={item.discount}
-                    additional={item.additional}
-                  />
-                );
-              })}
+              {isLoading
+                ? Array.from({ length: numPlaceholders }).map((_, i) => (
+                    <Loading key={i} />
+                  ))
+                : product.map((item) => (
+                    <CardProducts
+                      key={item.id}
+                      id={item.id}
+                      title={item.title}
+                      price={item.price}
+                      image={item.image}
+                    />
+                  ))}
             </div>
           </div>
         </div>

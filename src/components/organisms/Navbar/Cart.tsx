@@ -31,7 +31,6 @@ export default function Cart() {
     isOpen: state.isOpen,
     setIsOpen: state.setIsOpen,
   }));
-  const itemsCount = 2;
   const fee = 2;
   const {
     data: cartItems,
@@ -41,6 +40,7 @@ export default function Cart() {
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
+  const isCart: number = cartItems?.length ?? 0;
 
   const { totalPrice }: TotalSummary = useMemo(() => {
     return cartItems
@@ -84,14 +84,14 @@ export default function Cart() {
           }`}
         />
         <span className='ml-2 text-sm font-medium text-white group-hover:text-gray-800'>
-          {cartItems?.length}
+          {isCart}
         </span>
       </SheetTrigger>
       <SheetContent className='flex w-full flex-col pr-2 sm:max-w-lg'>
         <SheetHeader className='space-y-2.5 pr-6'>
-          <SheetTitle>{`Cart ${cartItems?.length}`}</SheetTitle>
+          <SheetTitle>{`Cart ${isCart}`}</SheetTitle>
         </SheetHeader>
-        {itemsCount > 0 ? (
+        {isCart > 0 ? (
           <>
             <div className='flex w-full flex-col pr-6 space-y-4'>
               {isLoading
@@ -105,6 +105,7 @@ export default function Cart() {
                       quantity={item.quantity}
                       title={item.product.title}
                       latinName={item.product.latinName}
+                      productQuantity={item.product.quantity}
                       updateCart={(update: TPutCart) =>
                         updateCart({ cartId: item.id, updateCart: update })
                       }
@@ -150,7 +151,7 @@ export default function Cart() {
             </span>
             <SheetTrigger asChild>
               <Link
-                href='/products'
+                href='/product'
                 className={buttonVariants({
                   variant: "link",
                   size: "sm",
