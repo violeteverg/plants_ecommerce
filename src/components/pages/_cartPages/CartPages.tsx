@@ -2,7 +2,6 @@
 
 import CartProducts from "@/components/organisms/CartProducts/CartProducts";
 import LoadingCartPages from "@/components/organisms/Loading/LoadingCartPages";
-import Navbar from "@/components/organisms/Navbar/Navbar";
 import TotalProducts from "@/components/organisms/TotalProducts/TotalProducts";
 import WidthWrapper from "@/components/WidthWrapper";
 import { useRemoveCart } from "@/hooks/useRemoveCart";
@@ -54,7 +53,6 @@ export default function CartPages() {
 
   return (
     <>
-      <Navbar navbarStyle='sticky' />
       <WidthWrapper className='flex justify-center items-center h-screen '>
         <div className='flex w-[80%] border rounded-lg border-black'>
           <div className='w-[70%] flex flex-col justify-center h-full items-start'>

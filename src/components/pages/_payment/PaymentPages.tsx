@@ -84,7 +84,6 @@ export default function PaymentPages() {
 
   return (
     <>
-      <Navbar navbarStyle='sticky' />
       <WidthWrapper className='flex justify-center items-center h-screen '>
         <div className='flex w-[80%] '>
           <div className='w-[70%] flex flex-col justify-center h-full items-center'>

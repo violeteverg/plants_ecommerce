@@ -1,5 +1,4 @@
 export * from "./_homepage";
-export * from "./_product";
 export * from "./_cactusPages";
 export * from "./_plantsPages";
 export * from "./_succulentsPages";
