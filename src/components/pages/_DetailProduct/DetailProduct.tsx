@@ -1,7 +1,6 @@
 "use client";
 
 import WidthWrapper from "@/components/WidthWrapper";
-import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { formatPrice, setSessionStorage } from "@/lib/utils";
@@ -11,7 +10,7 @@ import { useMainStore } from "@/utils/providers/storeProvider";
 import { TPostCart } from "@/utils/schemas/cartSchemas";
 import { productResponse } from "@/utils/schemas/productSchemas";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, CircleCheckBigIcon, CircleX } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -48,14 +47,25 @@ export default function DetailProduct() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["CARTITEMS"] });
       toast({
-        title: "Succes add to cart",
+        variant: "success",
+        description: (
+          <div className='flex gap-2 font-bold'>
+            <CircleCheckBigIcon className='text-green-600' />
+            <p>Succes add to Cart</p>
+          </div>
+        ),
       });
     },
     onError: (error) => {
       console.log(error);
       toast({
         variant: "destructive",
-        title: `${error}`,
+        description: (
+          <div className='flex gap-2 font-bold'>
+            <CircleX />
+            <p>the quantity product has reached</p>
+          </div>
+        ),
       });
     },
   });
@@ -107,7 +117,6 @@ export default function DetailProduct() {
 
   return (
     <>
-      <Navbar navbarStyle='sticky' />
       <WidthWrapper className='flex justify-center items-center text-white h-screen'>
         <div className='flex border border-black rounded-lg h-[80%] w-[80%] px-5 py-2 gap-1'>
           <div className='flex h-[100%] w-[100%] justify-center items-center'>
