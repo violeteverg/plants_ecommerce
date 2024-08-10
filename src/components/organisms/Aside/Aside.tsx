@@ -1,4 +1,5 @@
 "use client";
+
 import { usePathname } from "next/navigation";
 import {
   Breadcrumb,
@@ -25,7 +26,6 @@ export default function Aside() {
   useEffect(() => {
     setActivePage(pathname);
   }, [pathname, setActivePage]);
-  console.log(pagePath);
 
   const handleToggle = (index: number) => {
     setOpenItems((prev) => ({

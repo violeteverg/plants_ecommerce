@@ -43,6 +43,7 @@ export const editCart = async (id: number, updateCart: TPutCart) => {
     return result;
   } catch (error) {
     console.error("this is error", error);
+    console.log(error);
     throw error;
   }
 };
@@ -52,6 +53,21 @@ export const deleteCart = async (id: number) => {
     const res = await fetch(`http://localhost:3007/cart/${id}`, {
       method: "DELETE",
       credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error("Failed to delete cart item");
+    }
+    return res.json();
+  } catch (error) {
+    throw new Error("gagal apus pokok e");
+  }
+};
+
+export const postPayment = async (body: any) => {
+  try {
+    const res = await fetch(`http://localhost:3007/midtrans/transaction`, {
+      method: "POST",
+      body: body,
     });
     if (!res.ok) {
       throw new Error("Failed to delete cart item");

@@ -3,6 +3,7 @@
 import WidthWrapper from "@/components/WidthWrapper";
 import Navbar from "@/components/organisms/Navbar/Navbar";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { formatPrice, setSessionStorage } from "@/lib/utils";
 import { getProductId } from "@/services/getdata";
 import { addCart } from "@/services/postdata";
@@ -16,18 +17,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
 export default function DetailProduct() {
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
   const productId = Number(useSearchParams().get("productId"));
 
-  const { count, increment, decrement, resetCount, setIsOpen, setProductId } =
+  const { count, increment, decrement, resetCount, setProductId } =
     useMainStore((state) => ({
       count: state.count,
       increment: state.increment,
       decrement: state.decrement,
       productId: state.productId,
       resetCount: state.resetCount,
-      setIsOpen: state.setIsOpen,
       setProductId: state.setProductId,
     }));
 
@@ -46,9 +47,16 @@ export default function DetailProduct() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["CARTITEMS"] });
+      toast({
+        title: "Succes add to cart",
+      });
     },
     onError: (error) => {
       console.log(error);
+      toast({
+        variant: "destructive",
+        title: `${error}`,
+      });
     },
   });
 
@@ -77,7 +85,6 @@ export default function DetailProduct() {
     if (productDetails) {
       mutate({ productId: dataProduct?.[0]?.id ?? 0, quantity: count });
     }
-    setIsOpen(true);
   };
 
   const buyNow = () => {

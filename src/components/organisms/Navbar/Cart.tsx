@@ -25,12 +25,11 @@ import { useUpdateCart } from "@/hooks/useUpdateCart";
 import { TPutCart } from "@/utils/schemas/cartSchemas";
 import { useRemoveCart } from "@/hooks/useRemoveCart";
 
-export default function Cart() {
-  const [scrollY, setScrollY] = useState(0);
-  const { isOpen, setIsOpen } = useMainStore((state) => ({
-    isOpen: state.isOpen,
-    setIsOpen: state.setIsOpen,
-  }));
+export default function Cart({ user }: { user?: string }) {
+  // const { isOpen, setIsOpen } = useMainStore((state) => ({
+  //   isOpen: state.isOpen,
+  //   setIsOpen: state.setIsOpen,
+  // }));
   const fee = 2;
   const {
     data: cartItems,
@@ -40,6 +39,7 @@ export default function Cart() {
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
+  console.log(cartItems);
   const isCart: number = cartItems?.length ?? 0;
 
   const { totalPrice }: TotalSummary = useMemo(() => {
@@ -66,23 +66,10 @@ export default function Cart() {
     },
   });
 
-  // useEffect(() => {
-  //   const handleScroll = () => setScrollY(window.scrollY);
-
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet>
       <SheetTrigger className='group -m-2 flex items-center p-2'>
-        <ShoppingCart
-          className={`h-6 w-6 flex-shrink-0 ${
-            scrollY > 80
-              ? "text-black"
-              : "text-gray-900 group-hover:text-gray-900"
-          }`}
-        />
+        <ShoppingCart className={`h-6 w-6 flex-shrink-0`} />
         <span className='ml-2 text-sm font-medium text-white group-hover:text-gray-800'>
           {isCart}
         </span>
