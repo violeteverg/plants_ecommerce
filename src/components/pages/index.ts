@@ -7,6 +7,6 @@ export * from "./_potsPages";
 export * from "./_growingMediaPages";
 export * from "./_allProductPages";
 export * from "./_cartPages";
-export * from "./_payment"
+export * from "./_payment";
 
 // untuk product liat nanti karna sepertinya tidak di pakai filenya

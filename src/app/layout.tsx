@@ -6,6 +6,7 @@ import { Raleway } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -49,6 +50,7 @@ export default function RootLayout({
           <MainStoreProvider>
             <main className='relative flex flex-col h-full'>{children}</main>
           </MainStoreProvider>
+          <Toaster />
         </body>
       </html>
     </ReactQueryProviders>

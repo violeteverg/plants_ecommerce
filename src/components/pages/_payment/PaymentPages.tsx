@@ -31,15 +31,15 @@ export default function PaymentPages() {
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
-  console.log(cartItems);
 
   const { data: dataProduct } = useQuery<productResponse | null>({
     queryKey: ["PRODUCTID"],
     queryFn: () => getProductId(getSessionData?.productId),
   });
+  console.log(dataProduct);
   const updateProductQuantity = useMemo(() => {
     if (dataProduct) {
-      const data = dataProduct?.map((item) => ({
+      const data = dataProduct?.map((item: any) => ({
         ...item,
         quantity: count,
       }));
@@ -59,7 +59,7 @@ export default function PaymentPages() {
 
   const dataPayment = () => {
     if (isBuyNow) {
-      const data = updateProductQuantity?.map((item, i) => (
+      const data = updateProductQuantity?.map((item: any, i: number) => (
         <CartPayment
           key={i}
           title={item.title}
@@ -71,7 +71,7 @@ export default function PaymentPages() {
       return data;
     }
 
-    return cartItems?.map((items, index) => (
+    return cartItems?.map((items: any, index: number) => (
       <CartPayment
         key={index}
         title={items.product.title}
