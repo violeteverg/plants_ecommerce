@@ -9,8 +9,7 @@ import {
 export const getAllProduct = async (): Promise<response> => {
   try {
     const res = await axios.get<response>("http://localhost:3007/product");
-    console.log("test");
-    console.log(res.data.data);
+
     return res.data;
   } catch (error) {
     console.error(error);
@@ -22,8 +21,7 @@ export const getCactusProduct = async (): Promise<response> => {
     const res = await axios.get<response>(
       "http://localhost:3007/product/category/cactus"
     );
-    console.log("test");
-    console.log(res.data);
+
     return res.data;
   } catch (error) {
     console.error(error);
@@ -35,8 +33,7 @@ export const getPlantsProduct = async (): Promise<response> => {
     const res = await axios.get<response>(
       "http://localhost:3007/product/category/plants"
     );
-    console.log("test");
-    console.log(res.data);
+
     return res.data;
   } catch (error) {
     console.error(error);
@@ -48,8 +45,7 @@ export const getSucculentsProduct = async (): Promise<response> => {
     const res = await axios.get<response>(
       "http://localhost:3007/product/category/succulents"
     );
-    console.log("test");
-    console.log(res.data);
+
     return res.data;
   } catch (error) {
     console.error(error);

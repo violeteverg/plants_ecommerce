@@ -19,7 +19,6 @@ export function useUpdateCart({ onSuccess, onError }: UseUpdateCartProps = {}) {
       updateCart: TPutCart;
     }) => editCart(cartId, updateCart),
     onSuccess: (data) => {
-      console.log("Cart item updated successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["CARTITEMS"] });
       if (onSuccess) onSuccess(data);
     },

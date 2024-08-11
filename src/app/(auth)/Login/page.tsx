@@ -2,8 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { Icons } from "@/components/Icon";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CircleX } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -13,11 +12,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, TSignInSchema } from "@/utils/schemas/authSchemas";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "@/services/login";
-import { usePathname, useRouter } from "next/navigation";
-import { useMainStore } from "@/utils/providers/storeProvider";
-import { stat } from "fs";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 export default function SignIn() {
+  const { toast } = useToast();
   const {
     register,
     handleSubmit,
@@ -25,29 +25,30 @@ export default function SignIn() {
   } = useForm<TSignInSchema>({
     resolver: zodResolver(signInSchema),
   });
-  const { setAuthenticated } = useMainStore((state) => ({
-    setAuthenticated: state.setAuthenticated,
-  }));
+
   const router = useRouter();
-  const pathName = usePathname();
 
   const { mutate } = useMutation({
     mutationFn: (val: TSignInSchema) => {
-      console.log(val);
       return loginUser(val);
     },
-    onSuccess: (data) => {
-      setAuthenticated(true);
+    onSuccess: () => {
       router.push("./product");
-      console.log("success", data);
     },
     onError: (error) => {
-      console.log("error", error);
+      toast({
+        variant: "destructive",
+        description: (
+          <div className='flex gap-2 font-bold'>
+            <CircleX />
+            {`${error}`}
+          </div>
+        ),
+      });
     },
   });
 
   const onSubmit = (val: TSignInSchema) => {
-    console.log(val);
     mutate(val);
   };
 

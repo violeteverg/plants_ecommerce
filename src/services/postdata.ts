@@ -16,7 +16,6 @@ export const addCart = async (data: TPostCart) => {
     }
 
     const result = await res.json();
-    console.log(result);
     return result;
   } catch (error) {
     console.error("Error adding to cart:", error);
@@ -42,8 +41,6 @@ export const editCart = async (id: number, updateCart: TPutCart) => {
     const result = await res.json();
     return result;
   } catch (error) {
-    console.error("this is error", error);
-    console.log(error);
     throw error;
   }
 };

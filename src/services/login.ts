@@ -1,10 +1,5 @@
 import axios from "axios";
-import {
-  TCreateUser,
-  TLoginUser,
-  TResponseCreate,
-} from "@/utils/schemas/authSchemas";
-import { cookies } from "next/headers";
+import { TCreateUser, TLoginUser } from "@/utils/schemas/authSchemas";
 
 export const createUser = async (data: TCreateUser) => {
   try {
@@ -13,10 +8,8 @@ export const createUser = async (data: TCreateUser) => {
       data,
       { withCredentials: true }
     );
-    console.log("login", response.data);
     return response.data;
   } catch (error) {
-    // console.log(error);
     throw new Error("failed to send data");
   }
 };
@@ -28,7 +21,6 @@ export const loginUser = async (data: TLoginUser) => {
       data,
       { withCredentials: true }
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error("failed to send data");
