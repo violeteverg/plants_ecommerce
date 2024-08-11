@@ -24,7 +24,6 @@ export default function CartPages() {
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
-  console.log(cartItems);
 
   //summary total quantity and total price
   const totalSummary: TotalSummary = useMemo(() => {

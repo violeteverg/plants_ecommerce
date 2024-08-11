@@ -78,7 +78,7 @@ export function setSessionStorage(key: string, value: any, expired: number) {
 }
 
 export function getSessionStorageItem(key: string, _isBuyNow: boolean) {
-  const itemStr = sessionStorage.getItem(key);
+  const itemStr = sessionStorage?.getItem(key);
   if (!itemStr) return null;
 
   const { index: productId, isBuyNow, expired } = JSON.parse(itemStr);

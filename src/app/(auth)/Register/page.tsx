@@ -1,31 +1,26 @@
 "use client";
 
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { Icons } from "@/components/Icon";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CircleX } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  TResponseCreate,
-  TSignUpschema,
-  signUpSchema,
-} from "@/utils/schemas/authSchemas";
+import { TSignUpschema, signUpSchema } from "@/utils/schemas/authSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { createUser } from "@/services/login";
 import { useState } from "react";
-import { useMainStore } from "@/utils/providers/storeProvider";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
 
 export default function SignUp() {
+  const { toast } = useToast();
   const [focused, setFocused] = useState(false);
-  const { setAuthenticated } = useMainStore((state) => ({
-    setAuthenticated: state.setAuthenticated,
-  }));
+
   const router = useRouter();
   const {
     handleSubmit,
@@ -37,25 +32,27 @@ export default function SignUp() {
 
   const { mutate } = useMutation({
     mutationFn: (val: TSignUpschema) => {
-      console.log(val);
       return createUser(val);
     },
-    onSuccess: (data: TResponseCreate) => {
-      setAuthenticated(true);
+    onSuccess: () => {
       router.push("./product");
-      console.log("succes", data);
     },
     onError: (error) => {
-      console.log("error", error);
+      toast({
+        variant: "destructive",
+        description: (
+          <div className='flex gap-2 font-bold'>
+            <CircleX />
+            {`${error}`}
+          </div>
+        ),
+      });
     },
   });
 
   const onSubmit = (val: TSignUpschema) => {
-    console.log(val);
     mutate(val);
   };
-
-  console.log(errors);
 
   return (
     <>

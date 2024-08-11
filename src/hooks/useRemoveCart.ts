@@ -12,7 +12,6 @@ export function useRemoveCart({ onSuccess, onError }: useRemoveCartProps = {}) {
   const { mutate: removeCart } = useMutation({
     mutationFn: (cartId: number) => deleteCart(cartId),
     onSuccess: (data) => {
-      console.log("Cart already delete:", data);
       queryClient.invalidateQueries({ queryKey: ["CARTITEMS"] });
       if (onSuccess) onSuccess(data);
     },

@@ -20,26 +20,17 @@ import { useQuery } from "@tanstack/react-query";
 import { getCartData } from "@/services/getdata";
 import { CartItem, TotalSummary } from "@/utils/schemas/productSchemas";
 import LoadingCartItems from "../Loading/LoadingCartItems";
-import { useMainStore } from "@/utils/providers/storeProvider";
 import { useUpdateCart } from "@/hooks/useUpdateCart";
 import { TPutCart } from "@/utils/schemas/cartSchemas";
 import { useRemoveCart } from "@/hooks/useRemoveCart";
 
-export default function Cart({ user }: { user?: string }) {
-  // const { isOpen, setIsOpen } = useMainStore((state) => ({
-  //   isOpen: state.isOpen,
-  //   setIsOpen: state.setIsOpen,
-  // }));
+export default function Cart() {
   const fee = 2;
-  const {
-    data: cartItems,
-    isLoading,
-    isError,
-  } = useQuery<CartItem[]>({
+  const { data: cartItems, isLoading } = useQuery<CartItem[]>({
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
   });
-  console.log(cartItems);
+
   const isCart: number = cartItems?.length ?? 0;
 
   const { totalPrice }: TotalSummary = useMemo(() => {

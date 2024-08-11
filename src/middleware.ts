@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
       req.nextUrl.pathname.startsWith("/Register") ||
       req.nextUrl.pathname.startsWith("/Login")
     ) {
-      console.log(req.nextUrl.pathname);
       return NextResponse.redirect(new URL("/product", req.url));
     }
   }

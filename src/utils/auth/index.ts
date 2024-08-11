@@ -1,5 +1,6 @@
 import { jwtVerify, compactVerify } from "jose";
 import { cookies } from "next/headers";
+
 export const getJwtSecretKey = () => {
   const secret = process.env.JWT_SECRET_KEY;
   if (!secret || secret.length === 0) {
@@ -33,11 +34,3 @@ export function getAccessToken(): string | undefined {
 export function isAuthenticateds(): boolean {
   return !!getAccessToken();
 }
-
-// export const checkUserLogin = async () => {
-//   const cookieStore = cookies();
-//   const token = cookieStore.get("Authentication")?.value;
-//   const user = token && (await verifyAuth(token));
-
-//   return user;
-// };

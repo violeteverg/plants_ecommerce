@@ -36,7 +36,7 @@ export default function PaymentPages() {
     queryKey: ["PRODUCTID"],
     queryFn: () => getProductId(getSessionData?.productId),
   });
-  console.log(dataProduct);
+
   const updateProductQuantity = useMemo(() => {
     if (dataProduct) {
       const data = dataProduct?.map((item: any) => ({

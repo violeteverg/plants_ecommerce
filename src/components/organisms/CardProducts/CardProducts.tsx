@@ -33,12 +33,10 @@ const CardProducts = ({
   const HargaFixBanget = parseFloat(finalPrice.toFixed(3));
 
   const cardClickHandler = (id: number) => {
-    console.log("ID:", id);
     setProductId(id);
     router.push(`/detail?productId=${id}`);
   };
 
-  // console.log(productId);
   return (
     <div className='w-[16vw] h-fit text-black justify-center items-center'>
       <div
