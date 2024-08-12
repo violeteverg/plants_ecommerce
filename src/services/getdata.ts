@@ -5,10 +5,11 @@ import {
   response,
   responses,
 } from "@/utils/schemas/productSchemas";
+import { API_URL } from "@/utils/constant/constant";
 
 export const getAllProduct = async (): Promise<response> => {
   try {
-    const res = await axios.get<response>("http://localhost:3007/product");
+    const res = await axios.get<response>(`${API_URL}/product`);
 
     return res.data;
   } catch (error) {
@@ -18,9 +19,7 @@ export const getAllProduct = async (): Promise<response> => {
 };
 export const getCactusProduct = async (): Promise<response> => {
   try {
-    const res = await axios.get<response>(
-      "http://localhost:3007/product/category/cactus"
-    );
+    const res = await axios.get<response>(`${API_URL}/product/category/cactus`);
 
     return res.data;
   } catch (error) {
@@ -30,9 +29,7 @@ export const getCactusProduct = async (): Promise<response> => {
 };
 export const getPlantsProduct = async (): Promise<response> => {
   try {
-    const res = await axios.get<response>(
-      "http://localhost:3007/product/category/plants"
-    );
+    const res = await axios.get<response>(`${API_URL}/product/category/plants`);
 
     return res.data;
   } catch (error) {
@@ -43,7 +40,7 @@ export const getPlantsProduct = async (): Promise<response> => {
 export const getSucculentsProduct = async (): Promise<response> => {
   try {
     const res = await axios.get<response>(
-      "http://localhost:3007/product/category/succulents"
+      `${API_URL}/product/category/succulents`
     );
 
     return res.data;
@@ -54,7 +51,7 @@ export const getSucculentsProduct = async (): Promise<response> => {
 };
 export const getPotsProduct = async (): Promise<responses> => {
   try {
-    const res = await fetch("http://localhost:3007/product/category/pots", {
+    const res = await fetch(`${API_URL}/product/category/pots`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -69,13 +66,10 @@ export const getPotsProduct = async (): Promise<responses> => {
 };
 export const getGrowingMediaProduct = async (): Promise<responses> => {
   try {
-    const res = await fetch(
-      "http://localhost:3007/product/category/growing-media",
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    );
+    const res = await fetch(`${API_URL}/product/category/growing-media`, {
+      method: "GET",
+      credentials: "include",
+    });
     const data = await res.json();
     return data;
   } catch (error) {
@@ -84,7 +78,7 @@ export const getGrowingMediaProduct = async (): Promise<responses> => {
 };
 export const getProductId = async (id: number): Promise<productResponse> => {
   try {
-    const res = await axios.get(`http://localhost:3007/product/${id}`);
+    const res = await axios.get(`${API_URL}/product/${id}`);
     const data = res.data.data;
     return data;
   } catch (error) {
@@ -94,7 +88,7 @@ export const getProductId = async (id: number): Promise<productResponse> => {
 };
 export const getCartData = async (): Promise<CartItem[]> => {
   try {
-    const res = await fetch("http://localhost:3007/cart", {
+    const res = await fetch(`${API_URL}/cart`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
