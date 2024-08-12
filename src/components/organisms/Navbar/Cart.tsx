@@ -23,12 +23,18 @@ import LoadingCartItems from "../Loading/LoadingCartItems";
 import { useUpdateCart } from "@/hooks/useUpdateCart";
 import { TPutCart } from "@/utils/schemas/cartSchemas";
 import { useRemoveCart } from "@/hooks/useRemoveCart";
+import { useMainStore } from "@/utils/providers/storeProvider";
 
 export default function Cart() {
   const fee = 2;
+  const { isOpen, setIsOpen } = useMainStore((state) => ({
+    isOpen: state.isOpen,
+    setIsOpen: state.setIsOpen,
+  }));
   const { data: cartItems, isLoading } = useQuery<CartItem[]>({
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
+    enabled: isOpen,
   });
 
   const isCart: number = cartItems?.length ?? 0;
@@ -58,7 +64,7 @@ export default function Cart() {
   });
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger className='group -m-2 flex items-center p-2'>
         <ShoppingCart className={`h-6 w-6 flex-shrink-0`} />
         <span className='ml-2 text-sm font-medium text-white group-hover:text-gray-800'>

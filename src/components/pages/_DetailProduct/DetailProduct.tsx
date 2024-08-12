@@ -3,7 +3,7 @@ import WidthWrapper from "@/components/WidthWrapper";
 import LoadingDetail from "@/components/organisms/Loading/LoadingDetail";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { formatPrice, setSessionStorage } from "@/lib/utils";
+import { cn, formatPrice, setSessionStorage } from "@/lib/utils";
 import { getProductId } from "@/services/getdata";
 import { addCart } from "@/services/postdata";
 import { useMainStore } from "@/utils/providers/storeProvider";
@@ -50,6 +50,9 @@ export default function DetailProduct() {
             <p>Succes add to Cart</p>
           </div>
         ),
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+        ),
       });
     },
     onError: (error) => {
@@ -61,6 +64,9 @@ export default function DetailProduct() {
             <CircleX />
             <p>the quantity product has reached</p>
           </div>
+        ),
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
         ),
       });
     },
