@@ -7,9 +7,9 @@ import {
 } from "@/utils/schemas/productSchemas";
 import { API_URL } from "@/utils/constant/constant";
 
-export const getAllProduct = async (): Promise<response> => {
+export const getAllProduct = async (page: number): Promise<response> => {
   try {
-    const res = await axios.get<response>(`${API_URL}/product`);
+    const res = await axios.get<response>(`${API_URL}/product?page=${page}`);
 
     return res.data;
   } catch (error) {
@@ -17,30 +17,10 @@ export const getAllProduct = async (): Promise<response> => {
     throw new Error("Failed to fetch products");
   }
 };
-export const getCactusProduct = async (): Promise<response> => {
-  try {
-    const res = await axios.get<response>(`${API_URL}/product/category/cactus`);
-
-    return res.data;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to fetch products");
-  }
-};
-export const getPlantsProduct = async (): Promise<response> => {
-  try {
-    const res = await axios.get<response>(`${API_URL}/product/category/plants`);
-
-    return res.data;
-  } catch (error) {
-    console.error(error);
-    throw new Error("Failed to fetch products");
-  }
-};
-export const getSucculentsProduct = async (): Promise<response> => {
+export const getCactusProduct = async (page: number): Promise<response> => {
   try {
     const res = await axios.get<response>(
-      `${API_URL}/product/category/succulents`
+      `${API_URL}/product/category/cactus?page=${page}`
     );
 
     return res.data;
@@ -49,9 +29,33 @@ export const getSucculentsProduct = async (): Promise<response> => {
     throw new Error("Failed to fetch products");
   }
 };
-export const getPotsProduct = async (): Promise<responses> => {
+export const getPlantsProduct = async (page: number): Promise<response> => {
   try {
-    const res = await fetch(`${API_URL}/product/category/pots`, {
+    const res = await axios.get<response>(
+      `${API_URL}/product/category/plants?page=${page}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch products");
+  }
+};
+export const getSucculentsProduct = async (page: number): Promise<response> => {
+  try {
+    const res = await axios.get<response>(
+      `${API_URL}/product/category/succulents?page=${page}`
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch products");
+  }
+};
+export const getPotsProduct = async (page: number): Promise<responses> => {
+  try {
+    const res = await fetch(`${API_URL}/product/category/pots?page=${page}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -64,12 +68,17 @@ export const getPotsProduct = async (): Promise<responses> => {
     throw error;
   }
 };
-export const getGrowingMediaProduct = async (): Promise<responses> => {
+export const getGrowingMediaProduct = async (
+  page: number
+): Promise<responses> => {
   try {
-    const res = await fetch(`${API_URL}/product/category/growing-media`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${API_URL}/product/category/growing-media?page=${page}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error) {

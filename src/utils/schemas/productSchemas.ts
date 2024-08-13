@@ -15,16 +15,23 @@ export type product = {
   category: category;
   discount: number | null;
 };
+export type pagination = {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+};
 export type responses = {
   code: number;
   status: string;
   message: string;
   data: Array<Product>;
+  pagination: pagination;
 };
-export type productResponse = Array<product>;
 export type response = {
   data: Array<product>;
+  pagination: pagination;
 };
+export type productResponse = Array<product>;
 // Definisikan tipe untuk Product
 export type Product = {
   id: number;
