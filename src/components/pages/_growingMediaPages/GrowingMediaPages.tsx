@@ -6,18 +6,33 @@ import Loading from "@/components/organisms/Loading/Loading";
 import { getGrowingMediaProduct } from "@/services/getdata";
 import { responses } from "@/utils/schemas/productSchemas";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export default function GrowingMediaPages() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(currentPage);
   const { data, isLoading } = useQuery<responses>({
     queryKey: ["GROWING_MEDIA"],
-    queryFn: getGrowingMediaProduct,
+    queryFn: () => getGrowingMediaProduct(page),
+    refetchOnMount: true,
   });
   const product = data?.data || [];
   const numPlaceholders = data?.data.length || 5;
+  const pageCount = data?.pagination.totalPages || 1;
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    router.push(`?page=${newPage}`);
+  };
   return (
     <Bodypage
       image='/bgProduct/bg-growing_media-product.jpeg'
       text='Growing Media'
+      pageCount={pageCount}
+      currentPage={page}
+      onPageChange={handlePageChange}
     >
       {isLoading
         ? Array.from({ length: numPlaceholders }).map((_, i) => (
