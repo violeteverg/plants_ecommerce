@@ -1,6 +1,28 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "../../ui/input";
+import React from "react";
 
 export default function SearchBar() {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+
+  const searchHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const target = e.target as HTMLInputElement;
+      const params = new URLSearchParams(searchParams);
+      if (target.value) {
+        params.set("q", target.value);
+      } else {
+        params.delete("q");
+      }
+      if (!params.has("page")) {
+        params.set("page", "1");
+      }
+      replace(`/search?${params.toString()}`);
+    }
+  };
   return (
     <div className='relative w-[500px]'>
       <svg
@@ -17,7 +39,12 @@ export default function SearchBar() {
           d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
         />
       </svg>
-      <Input type='text' placeholder='Search' className='pl-12 pr-4' />
+      <Input
+        type='text'
+        placeholder='Search'
+        className='pl-12 pr-4'
+        onKeyDown={searchHandler}
+      />
     </div>
   );
 }
