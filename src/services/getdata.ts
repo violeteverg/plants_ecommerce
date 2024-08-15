@@ -17,6 +17,26 @@ export const getAllProduct = async (page: number): Promise<response> => {
     throw new Error("Failed to fetch products");
   }
 };
+export const getSearchProduct = async (
+  query: string,
+  page: number
+): Promise<responses> => {
+  try {
+    const res = await fetch(
+      `${API_URL}/product/search?query=${query}&page=${page}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    throw new Error("Failed to fetch products");
+  }
+};
 export const getCactusProduct = async (page: number): Promise<response> => {
   try {
     const res = await axios.get<response>(
