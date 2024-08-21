@@ -53,7 +53,7 @@ const CardProducts = ({
           <div className='bg-slate-500 p-5 w-4 h-4 rounded-full opacity-10' />
         </div>
         <div className='flex flex-col justify-center items-center w-full duration-10'>
-          <Image src={image} alt='plant' width={200} height={200} />
+          <Image src={image} alt='plant' width={150} height={200} />
           <hr className='w-6/12 my-2 transition-all duration-300 border border-y-1 border-[#e7e7e7]  ease-in-out group-hover:w-full group-hover:border-[#aeaeae]' />
         </div>
         {discount ? (

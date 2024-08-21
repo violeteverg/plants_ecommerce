@@ -71,6 +71,7 @@ export const postPayment = async (body: PaymentSchemas) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
+      credentials: "include",
     });
 
     if (!res.ok) {
