@@ -40,6 +40,9 @@ export default function PaymentPages() {
     enabled: isBuyNow,
   });
 
+  console.log("CART ITEMS :", cartItems);
+  console.log("DATA PRODUCT :", dataProduct);
+
   const updateProductQuantity = useMemo(() => {
     if (dataProduct) {
       const data = dataProduct?.map((item: any) => ({
@@ -50,18 +53,21 @@ export default function PaymentPages() {
     }
     return [];
   }, [dataProduct, count]);
+  console.log(updateProductQuantity);
 
   const sendBodyPayment = () => {
     if (isBuyNow) {
       const data = updateProductQuantity.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
+        price: item.price,
       }));
       return data;
     }
     const dataCart = cartItems?.map((item) => ({
       productId: item.id,
       quantity: item.quantity,
+      price: item.product.price,
     }));
     return dataCart;
   };

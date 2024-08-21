@@ -20,10 +20,11 @@ export default function AllProductPages() {
     queryFn: () => getAllProduct(page),
     refetchOnMount: true,
   });
-  console.log(data);
 
   const numPlaceholders = data?.data.length || 5;
   const pageCount = data?.pagination.totalPages || 1;
+  const product = data?.data || [];
+  const isHasData = product.length !== 0;
 
   // Function to handle page change
   const handlePageChange = (newPage: number) => {
@@ -38,12 +39,13 @@ export default function AllProductPages() {
       pageCount={pageCount}
       currentPage={page}
       onPageChange={handlePageChange}
+      isHasData={isHasData}
     >
       {isLoading
         ? Array.from({ length: numPlaceholders }).map((_, i) => (
             <Loading key={i} />
           ))
-        : data?.data.map((item) => (
+        : product.map((item) => (
             <CardProducts
               key={item.id}
               id={item.id}

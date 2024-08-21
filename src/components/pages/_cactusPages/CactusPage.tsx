@@ -22,6 +22,8 @@ export default function CactusPage() {
 
   const numPlaceholders = data?.data.length || 5;
   const pageCount = data?.pagination.totalPages || 1;
+  const product = data?.data || [];
+  const isHasData = product.length !== 0;
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -34,12 +36,13 @@ export default function CactusPage() {
       pageCount={pageCount}
       currentPage={page}
       onPageChange={handlePageChange}
+      isHasData={isHasData}
     >
       {isLoading
         ? Array.from({ length: numPlaceholders }).map((_, i) => (
             <Loading key={i} />
           ))
-        : data?.data.map((item) => (
+        : product.map((item) => (
             <CardProducts
               key={item.id}
               id={item.id}

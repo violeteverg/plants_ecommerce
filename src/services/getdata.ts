@@ -6,6 +6,7 @@ import {
   responses,
 } from "@/utils/schemas/productSchemas";
 import { API_URL } from "@/utils/constant/constant";
+import { TransactionResponse } from "@/utils/schemas/orderSchemas";
 
 export const getAllProduct = async (page: number): Promise<response> => {
   try {
@@ -127,6 +128,23 @@ export const getCartData = async (): Promise<CartItem[]> => {
     const data = await res.json();
 
     return data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+export const getOrderStatus = async (
+  id: string
+): Promise<TransactionResponse | undefined> => {
+  try {
+    const res = await fetch(`${API_URL}/midtrans/verify/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
   } catch (error) {
     throw error;
   }

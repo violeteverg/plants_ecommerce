@@ -26,6 +26,7 @@ export default function PotsPages() {
     setPage(newPage);
     router.push(`?page=${newPage}`);
   };
+  const isHasData = product.length !== 0;
 
   const numPlaceholders = product.length || 5;
   return (
@@ -35,6 +36,7 @@ export default function PotsPages() {
       pageCount={pageCount}
       currentPage={page}
       onPageChange={handlePageChange}
+      isHasData={isHasData}
     >
       {isLoading
         ? Array.from({ length: numPlaceholders }).map((_, i) => (

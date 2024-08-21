@@ -22,6 +22,7 @@ export default function GrowingMediaPages() {
   const product = data?.data || [];
   const numPlaceholders = data?.data.length || 5;
   const pageCount = data?.pagination.totalPages || 1;
+  const isHasData = product.length !== 0;
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     router.push(`?page=${newPage}`);
@@ -33,6 +34,7 @@ export default function GrowingMediaPages() {
       pageCount={pageCount}
       currentPage={page}
       onPageChange={handlePageChange}
+      isHasData={isHasData}
     >
       {isLoading
         ? Array.from({ length: numPlaceholders }).map((_, i) => (
