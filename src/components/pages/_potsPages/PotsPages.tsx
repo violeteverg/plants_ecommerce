@@ -21,14 +21,14 @@ export default function PotsPages() {
   });
 
   const product = data?.data || [];
-  const pageCount = data?.pagination.totalPages || 1;
+  const pageCount = data?.pagination?.totalPages || 1;
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     router.push(`?page=${newPage}`);
   };
-  const isHasData = product.length !== 0;
+  const isHasData = product?.length !== 0;
 
-  const numPlaceholders = product.length || 5;
+  const numPlaceholders = product?.length || 5;
   return (
     <Bodypage
       image='/bgProduct/bg-pots_product.jpg'
