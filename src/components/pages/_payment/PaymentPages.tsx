@@ -1,7 +1,6 @@
 "use client";
 
 import AddressCard from "@/components/organisms/AddressCard/AddressCard";
-import Navbar from "@/components/organisms/Navbar/Navbar";
 import TotalProducts from "@/components/organisms/TotalProducts/TotalProducts";
 import CartPayment from "@/components/organisms/CartPayment/CartPayment";
 import WidthWrapper from "@/components/WidthWrapper";
@@ -12,7 +11,7 @@ import {
   TotalSummary,
 } from "@/utils/schemas/productSchemas";
 import { getCartData, getProductId } from "@/services/getdata";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   calculateTotalSummary,
   calculateTotalSummaryFromBuyNow,
@@ -21,21 +20,28 @@ import {
 import { useMainStore } from "@/utils/providers/storeProvider";
 
 export default function PaymentPages() {
-  const { count } = useMainStore((state) => ({
+  const { count, isFromCart } = useMainStore((state) => ({
     count: state.count,
+    isFromCart: state.isFromCart,
   }));
   const getSessionData = getSessionStorageItem("__Ttemp", false);
-  const isBuyNow = getSessionData?.isBuyNow;
+
+  const isBuyNow = getSessionData?.isBuyNow || false;
 
   const { data: cartItems } = useQuery<CartItem[]>({
     queryKey: ["CARTITEMS"],
     queryFn: getCartData,
+    enabled: isFromCart,
   });
 
   const { data: dataProduct } = useQuery<productResponse | null>({
     queryKey: ["PRODUCTID"],
     queryFn: () => getProductId(getSessionData?.productId),
+    enabled: isBuyNow,
   });
+
+  console.log("CART ITEMS :", cartItems);
+  console.log("DATA PRODUCT :", dataProduct);
 
   const updateProductQuantity = useMemo(() => {
     if (dataProduct) {
@@ -47,6 +53,24 @@ export default function PaymentPages() {
     }
     return [];
   }, [dataProduct, count]);
+  console.log(updateProductQuantity);
+
+  const sendBodyPayment = () => {
+    if (isBuyNow) {
+      const data = updateProductQuantity.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+      }));
+      return data;
+    }
+    const dataCart = cartItems?.map((item) => ({
+      productId: item.id,
+      quantity: item.quantity,
+      price: item.product.price,
+    }));
+    return dataCart;
+  };
 
   const totalSummary: TotalSummary = useMemo(() => {
     if (isBuyNow) {
@@ -93,7 +117,11 @@ export default function PaymentPages() {
             </div>
           </div>
           <div className='w-[30%] p-4'>
-            <TotalProducts totalSummary={totalSummary} isPayment={true} />
+            <TotalProducts
+              totalSummary={totalSummary}
+              isPayment={true}
+              sendBodyPayment={sendBodyPayment() || []}
+            />
           </div>
         </div>
       </WidthWrapper>

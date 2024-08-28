@@ -17,6 +17,7 @@ export type StoreState = {
   isOpen: boolean;
   isBuyNow: boolean;
   isSnapVisible: boolean;
+  isFromCart: boolean;
 };
 
 // Actions
@@ -39,6 +40,7 @@ export type StoreActions = {
   setIsBuyNow: (isBuyNow: boolean) => void;
   setIsTempProduct: (tempProduct: Number | null) => void;
   setSnapVisible: (isSnapVisible: boolean) => void;
+  setIsFromCart: (isFromCart: boolean) => void;
 };
 
 export type MainStore = StoreState & StoreActions;
@@ -53,6 +55,7 @@ export const defaultInitState: StoreState = {
   isOpen: false,
   isBuyNow: true,
   isSnapVisible: true,
+  isFromCart: false,
 };
 
 export const createMainStore = (initState: StoreState = defaultInitState) => {
@@ -71,5 +74,6 @@ export const createMainStore = (initState: StoreState = defaultInitState) => {
     setIsBuyNow: (isBuyNow) => set({ isBuyNow }),
     setIsTempProduct: (tempProduct) => set({ tempProduct }),
     setSnapVisible: (isSnapVisible) => set({ isSnapVisible }),
+    setIsFromCart: (isFromCart) => set({ isFromCart }),
   }));
 };

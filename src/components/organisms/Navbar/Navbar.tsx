@@ -4,12 +4,13 @@ import NavbarServer from "../NavbarServer/NavbarServer";
 
 interface NavbarProps {
   children: ReactNode;
+  navbarStyle?: string;
 }
 
-export default function Navbar({ children }: NavbarProps) {
+export default function Navbar({ children, navbarStyle }: NavbarProps) {
   return (
     <>
-      <ClientNavbar>
+      <ClientNavbar navbarStyle={navbarStyle}>
         <NavbarServer />
       </ClientNavbar>
       {children}

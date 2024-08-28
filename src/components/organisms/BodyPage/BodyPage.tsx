@@ -1,12 +1,25 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { PaginationProduct } from "../Pagination/Pagination";
 
 interface BodyPagesProps {
   image: string;
   text: string;
   children: ReactNode;
+  pageCount: number;
+  currentPage: number;
+  isHasData?: boolean;
+  onPageChange: (page: number) => void;
 }
-export default function Bodypage({ image, text, children }: BodyPagesProps) {
+export default function Bodypage({
+  image,
+  text,
+  children,
+  pageCount,
+  currentPage,
+  onPageChange,
+  isHasData,
+}: BodyPagesProps) {
   return (
     <div className='flex-1 overflow-y-auto'>
       <div className='flex flex-col justify-center items-center'>
@@ -26,11 +39,26 @@ export default function Bodypage({ image, text, children }: BodyPagesProps) {
             </div>
           </div>
         </div>
-        <div className='rounded-[5px] mb-2 border overflow-hidden'>
-          <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 m-2'>
-            {children}
+        {isHasData ? (
+          <>
+            <div className='rounded-[5px] mb-2 border overflow-hidden'>
+              <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 m-2'>
+                {children}
+              </div>
+            </div>
+            <div className='my-2 w-full'>
+              <PaginationProduct
+                pageCount={pageCount}
+                currentPage={currentPage}
+                onPageChange={onPageChange}
+              />
+            </div>
+          </>
+        ) : (
+          <div>
+            <p>no data</p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
+import { API_URL } from "@/utils/constant/constant";
 import { TPostCart, TPutCart } from "@/utils/schemas/cartSchemas";
+import { PaymentSchemas } from "@/utils/schemas/paymentSchems";
 
 export const addCart = async (data: TPostCart) => {
   try {
-    const res = await fetch("http://localhost:3007/cart", {
+    const res = await fetch(`${API_URL}/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +27,7 @@ export const addCart = async (data: TPostCart) => {
 
 export const editCart = async (id: number, updateCart: TPutCart) => {
   try {
-    const res = await fetch(`http://localhost:3007/cart/${id}`, {
+    const res = await fetch(`${API_URL}/cart/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +49,7 @@ export const editCart = async (id: number, updateCart: TPutCart) => {
 
 export const deleteCart = async (id: number) => {
   try {
-    const res = await fetch(`http://localhost:3007/cart/${id}`, {
+    const res = await fetch(`${API_URL}/cart/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -60,17 +62,26 @@ export const deleteCart = async (id: number) => {
   }
 };
 
-export const postPayment = async (body: any) => {
+// postPayment function
+export const postPayment = async (body: PaymentSchemas) => {
   try {
-    const res = await fetch(`http://localhost:3007/midtrans/transaction`, {
+    const res = await fetch(`${API_URL}/midtrans/transaction`, {
       method: "POST",
-      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      credentials: "include",
     });
+
     if (!res.ok) {
-      throw new Error("Failed to delete cart item");
+      const errorData = await res.json();
+      throw new Error(`API Error: ${errorData.message}`);
     }
+
     return res.json();
   } catch (error) {
-    throw new Error("gagal apus pokok e");
+    console.error("API request failed:", error);
+    throw error;
   }
 };

@@ -89,13 +89,6 @@ export default function Aside() {
         </div>
 
         {/* filter price */}
-        <div className='font-semibold mt-8 px-4'>
-          <h1>Filter by</h1>
-          <hr className='w-[200px] my-2 border-black' />
-        </div>
-        <div className='my-4 px-4'>
-          <input type='range' defaultValue={20} />
-        </div>
       </div>
     </div>
   );
