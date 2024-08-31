@@ -10,7 +10,12 @@ import { TransactionResponse } from "@/utils/schemas/orderSchemas";
 
 export const getAllProduct = async (page: number): Promise<response> => {
   try {
-    const res = await axios.get<response>(`${API_URL}/product?page=${page}`);
+    const res = await axios.get<response>(`${API_URL}/product?page=${page}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
 
     return res.data;
   } catch (error) {
@@ -29,6 +34,7 @@ export const getSearchProduct = async (
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
         },
       }
     );
@@ -41,7 +47,13 @@ export const getSearchProduct = async (
 export const getCactusProduct = async (page: number): Promise<response> => {
   try {
     const res = await axios.get<response>(
-      `${API_URL}/product/category/cactus?page=${page}`
+      `${API_URL}/product/category/cactus?page=${page}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
     );
 
     return res.data;
@@ -53,7 +65,13 @@ export const getCactusProduct = async (page: number): Promise<response> => {
 export const getPlantsProduct = async (page: number): Promise<response> => {
   try {
     const res = await axios.get<response>(
-      `${API_URL}/product/category/plants?page=${page}`
+      `${API_URL}/product/category/plants?page=${page}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
     );
 
     return res.data;
@@ -65,7 +83,13 @@ export const getPlantsProduct = async (page: number): Promise<response> => {
 export const getSucculentsProduct = async (page: number): Promise<response> => {
   try {
     const res = await axios.get<response>(
-      `${API_URL}/product/category/succulents?page=${page}`
+      `${API_URL}/product/category/succulents?page=${page}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      }
     );
 
     return res.data;
@@ -80,6 +104,7 @@ export const getPotsProduct = async (page: number): Promise<responses> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
       },
       mode: "cors",
     });
@@ -98,6 +123,9 @@ export const getGrowingMediaProduct = async (
       {
         method: "GET",
         credentials: "include",
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
       }
     );
     const data = await res.json();
@@ -108,7 +136,12 @@ export const getGrowingMediaProduct = async (
 };
 export const getProductId = async (id: number): Promise<productResponse> => {
   try {
-    const res = await axios.get(`${API_URL}/product/${id}`);
+    const res = await axios.get(`${API_URL}/product/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
     const data = res.data.data;
     return data;
   } catch (error) {
@@ -122,6 +155,7 @@ export const getCartData = async (): Promise<CartItem[]> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
       },
       credentials: "include",
     });
@@ -140,6 +174,7 @@ export const getOrderStatus = async (
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true",
       },
       credentials: "include",
     });
