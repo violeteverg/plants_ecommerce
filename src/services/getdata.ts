@@ -81,6 +81,7 @@ export const getPotsProduct = async (page: number): Promise<responses> => {
       headers: {
         "Content-Type": "application/json",
       },
+      mode: "cors",
     });
     const data = await res.json();
     return data;
