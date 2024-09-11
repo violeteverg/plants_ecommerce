@@ -13,7 +13,6 @@ export const getAllProduct = async (page: number): Promise<response> => {
     const res = await axios.get<response>(`${API_URL}/product?page=${page}`, {
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
     });
 
@@ -34,7 +33,6 @@ export const getSearchProduct = async (
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
       }
     );
@@ -51,7 +49,6 @@ export const getCactusProduct = async (page: number): Promise<response> => {
       {
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
       }
     );
@@ -69,7 +66,6 @@ export const getPlantsProduct = async (page: number): Promise<response> => {
       {
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
       }
     );
@@ -87,7 +83,6 @@ export const getSucculentsProduct = async (page: number): Promise<response> => {
       {
         headers: {
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "true",
         },
       }
     );
@@ -104,7 +99,6 @@ export const getPotsProduct = async (page: number): Promise<responses> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
       mode: "cors",
     });
@@ -123,9 +117,7 @@ export const getGrowingMediaProduct = async (
       {
         method: "GET",
         credentials: "include",
-        headers: {
-          "ngrok-skip-browser-warning": "true",
-        },
+        headers: {},
       }
     );
     const data = await res.json();
@@ -139,7 +131,6 @@ export const getProductId = async (id: number): Promise<productResponse> => {
     const res = await axios.get(`${API_URL}/product/${id}`, {
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
     });
     const data = res.data.data;
@@ -155,7 +146,6 @@ export const getCartData = async (): Promise<CartItem[]> => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
       credentials: "include",
     });
@@ -174,7 +164,6 @@ export const getOrderStatus = async (
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "true",
       },
       credentials: "include",
     });
