@@ -5,7 +5,7 @@ import { API_URL } from "@/utils/constant/constant";
 export const createUser = async (data: TCreateUser) => {
   try {
     const response = await axios.post(`${API_URL}/auth/register`, data, {
-      withCredentials: true,
+      // withCredentials: true,
     });
     return response.data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const createUser = async (data: TCreateUser) => {
 export const loginUser = async (data: TLoginUser) => {
   try {
     const response = await axios.post(`${API_URL}/auth/login`, data, {
-      withCredentials: true,
+      // withCredentials: true,
     });
     return response.data;
   } catch (error) {

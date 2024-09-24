@@ -4,6 +4,7 @@ import { verifyAuth } from "./utils/auth";
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("Authentication")?.value;
+  console.log(">>>>>", token);
 
   const protectedPaths = ["/cart", "/cart/payment", "/order"];
 
