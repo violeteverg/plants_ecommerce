@@ -32,7 +32,9 @@ export default function SignIn() {
     mutationFn: (val: TSignInSchema) => {
       return loginUser(val);
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      // console.log(data, "ini data login");
+      document.cookie = `Authentication=${data.token}; Secure=false; SameSite=None; Path=/; maxAge=1d`;
       router.push("./product");
       router.refresh();
     },

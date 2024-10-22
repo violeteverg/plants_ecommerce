@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 export const getJwtSecretKey = () => {
   const secret = process.env.JWT_SECRET_KEY;
-  console.log(secret);
+  console.log(secret, "<<<<");
   if (!secret || secret.length === 0) {
     throw new Error("The environment variable JWT_SECRET_KEY is not set");
   }
@@ -28,9 +28,10 @@ export const verifyAuth = async (token: string) => {
 
 export function getAccessToken(): string | undefined {
   const cookie = cookies();
-  console.log(">>>>><", cookie);
+  // console.log(cookie, "<");
+  // console.log(">>>>><", cookie);
   const user = cookie.get("Authentication")?.value;
-  console.log(">>>>><>", user);
+  console.log(">>>>><> ini user token", user);
   return user;
 }
 
