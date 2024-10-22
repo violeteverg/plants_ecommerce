@@ -34,6 +34,7 @@ export default function SignIn() {
     },
     onSuccess: () => {
       router.push("./product");
+      router.refresh();
     },
     onError: (error) => {
       toast({
